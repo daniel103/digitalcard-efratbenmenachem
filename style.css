@@ -175,7 +175,9 @@ h1 {
     font-weight: 500;
     border-top: 1px solid rgba(212, 175, 55, 0.2);
 }
-
+#f {
+    color: var(--yellow);
+}
 #link {
     text-align: center;
     color: var(--purple);
