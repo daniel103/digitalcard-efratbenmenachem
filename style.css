@@ -162,7 +162,7 @@ h1 {
 .about-text {
     padding: 4px;
     text-align: start;
-    color: #e0d9d9;
+    color: var(--text);
     font-family: "Assistant", Sans-serif;
     font-size: 18px;
     font-weight: 400;
