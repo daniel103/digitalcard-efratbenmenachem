@@ -74,7 +74,7 @@
 
             <a href="#" class="save-contact" onclick="generateAndOpenVCF()">
                 הוספת אפרת לאנשי הקשר <i class="fa-solid fa-user-plus"></i>
-              </a>              
+              </a>           
 
             <div class="about-section">
                 <div class="about-title">נעים מאוד</div>
@@ -117,7 +117,7 @@
     </div>
     <script>
         function generateAndOpenVCF() {
-          // פרטי איש הקשר בפורמט תקני (vCard 3.0)
+          // פרטי איש הקשר
           const contactData = 
         `BEGIN:VCARD
         VERSION:3.0
@@ -128,31 +128,27 @@
         TEL;TYPE=CELL,VOICE:+972544515873
         END:VCARD`;
         
-          const blob = new Blob([contactData], { type: 'text/vcard;charset=utf-8' });
-          const url = window.URL.createObjectURL(blob);
+          // קידוד ל-Base64 כדי ש-Safari יזהה את זה כקובץ תקין
+          const encodedData = encodeURIComponent(contactData);
+          const vcfUrl = "data:text/vcard;charset=utf-8," + encodedData;
         
           const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
           const isAndroid = /android/i.test(navigator.userAgent);
         
           if (isIOS) {
-            // באייפון נפתח ישירות את כרטיס איש הקשר
-            const newWindow = window.open();
-            newWindow.location.href = url;
+            // ב-iPhone זה ייפתח ישירות ככרטיס איש קשר
+            window.location.href = vcfUrl;
           } else if (isAndroid) {
-            // באנדרואיד ניצור הורדה ישירה
+            // באנדרואיד נוריד אוטומטית
             const a = document.createElement('a');
-            a.href = url;
+            a.href = vcfUrl;
             a.download = 'EfratBenMenachem.vcf';
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
           } else {
-            // במחשב – פתיחה בחלון חדש
-            window.open(url, '_blank');
+            window.open(vcfUrl, '_blank');
           }
-        
-          // ניקוי משאב זמני
-          setTimeout(() => window.URL.revokeObjectURL(url), 2000);
         }
         </script>
 </body>
