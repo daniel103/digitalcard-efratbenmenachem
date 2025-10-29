@@ -72,9 +72,9 @@
 
             </div>
 
-            <a href="contact.vcf" download class="save-contact">
-        הוספת אפרת לאנשי הקשר <i class="fa-solid fa-user-plus"></i>
-            </a>
+            <a href="#" class="save-contact" onclick="addContact()">
+                הוספת אפרת לאנשי הקשר <i class="fa-solid fa-user-plus"></i>
+              </a>
 
             <div class="about-section">
                 <div class="about-title">נעים מאוד</div>
@@ -115,5 +115,28 @@
             </div>
         </div>
     </div>
+    <script>
+        function addContact() {
+          const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+          const vcfFile = 'contact.vcf';
+        
+          // זיהוי מערכת הפעלה
+          if (/android/i.test(userAgent)) {
+            // באנדרואיד - הורדה רגילה
+            const link = document.createElement('a');
+            link.href = vcfFile;
+            link.download = 'Efrat.vcf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+          } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+            // באייפון - פתיחה ישירה
+            window.location.href = vcfFile;
+          } else {
+            // במחשב או לא מזוהה
+            window.open(vcfFile, '_blank');
+          }
+        }
+        </script>        
 </body>
 </html>
