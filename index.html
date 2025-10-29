@@ -116,39 +116,44 @@
         </div>
     </div>
     <script>
-     function generateAndOpenVCF() {
-  // פרטי איש הקשר בפורמט מלא ותקין
-  const contactData = 
-`BEGIN:VCARD
-VERSION:3.0
-N:בן מנחם;אפרת;;;
-FN:אפרת בן מנחם
-TEL;TYPE=CELL,VOICE:+972544515873
-END:VCARD`;
-
-  const blob = new Blob([contactData], { type: 'text/vcard;charset=utf-8' });
-  const url = window.URL.createObjectURL(blob);
-
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-  const isAndroid = /android/i.test(navigator.userAgent);
-
-  if (isIOS) {
-    // iOS מצפה לפתיחה ישירה עם MIME תקין
-    const newWindow = window.open();
-    newWindow.location.href = url;
-  } else if (isAndroid) {
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'EfratBenMenachem.vcf';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  } else {
-    window.open(url, '_blank');
-  }
-
-  setTimeout(() => window.URL.revokeObjectURL(url), 2000);
-}
-        </script>     
+        function generateAndOpenVCF() {
+          // פרטי איש הקשר בפורמט תקני (vCard 3.0)
+          const contactData = 
+        `BEGIN:VCARD
+        VERSION:3.0
+        N:בן מנחם;אפרת;;;
+        FN:אפרת בן מנחם
+        ORG:🎤 אפרת על הגג - ערבי זמר
+        TITLE:זמרת
+        TEL;TYPE=CELL,VOICE:+972544515873
+        END:VCARD`;
+        
+          const blob = new Blob([contactData], { type: 'text/vcard;charset=utf-8' });
+          const url = window.URL.createObjectURL(blob);
+        
+          const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+          const isAndroid = /android/i.test(navigator.userAgent);
+        
+          if (isIOS) {
+            // באייפון נפתח ישירות את כרטיס איש הקשר
+            const newWindow = window.open();
+            newWindow.location.href = url;
+          } else if (isAndroid) {
+            // באנדרואיד ניצור הורדה ישירה
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'EfratBenMenachem.vcf';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+          } else {
+            // במחשב – פתיחה בחלון חדש
+            window.open(url, '_blank');
+          }
+        
+          // ניקוי משאב זמני
+          setTimeout(() => window.URL.revokeObjectURL(url), 2000);
+        }
+        </script>
 </body>
 </html>
