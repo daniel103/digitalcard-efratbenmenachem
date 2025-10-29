@@ -72,9 +72,9 @@
 
             </div>
 
-            <a href="#" class="save-contact" onclick="generateAndOpenVCF()">
+            <a href="efrat.vcf" class="save-contact">
                 הוספת אפרת לאנשי הקשר <i class="fa-solid fa-user-plus"></i>
-              </a>           
+              </a>          
 
             <div class="about-section">
                 <div class="about-title">נעים מאוד</div>
@@ -115,41 +115,5 @@
             </div>
         </div>
     </div>
-    <script>
-        function generateAndOpenVCF() {
-          // פרטי איש הקשר
-          const contactData = 
-        `BEGIN:VCARD
-        VERSION:3.0
-        N:בן מנחם;אפרת;;;
-        FN:אפרת בן מנחם
-        ORG:🎤 אפרת על הגג - ערבי זמר
-        TITLE:זמרת
-        TEL;TYPE=CELL,VOICE:+972544515873
-        END:VCARD`;
-        
-          // קידוד ל-Base64 כדי ש-Safari יזהה את זה כקובץ תקין
-          const encodedData = encodeURIComponent(contactData);
-          const vcfUrl = "data:text/vcard;charset=utf-8," + encodedData;
-        
-          const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-          const isAndroid = /android/i.test(navigator.userAgent);
-        
-          if (isIOS) {
-            // ב-iPhone זה ייפתח ישירות ככרטיס איש קשר
-            window.location.href = vcfUrl;
-          } else if (isAndroid) {
-            // באנדרואיד נוריד אוטומטית
-            const a = document.createElement('a');
-            a.href = vcfUrl;
-            a.download = 'EfratBenMenachem.vcf';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-          } else {
-            window.open(vcfUrl, '_blank');
-          }
-        }
-        </script>
 </body>
 </html>

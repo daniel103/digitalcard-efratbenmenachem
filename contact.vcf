@@ -1,10 +1,8 @@
 BEGIN:VCARD
-VERSION:4.0
-
-ORG:Efrat Ben Menachem
-
-TEL:0544515873
-
-URL:
-
+VERSION:3.0
+N:בן מנחם;אפרת;;;
+FN:אפרת בן מנחם
+ORG:🎤 אפרת על הגג - ערבי זמר
+TITLE:זמרת
+TEL;TYPE=CELL,VOICE:+972544515873
 END:VCARD
