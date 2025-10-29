@@ -72,9 +72,9 @@
 
             </div>
 
-            <a href="#" class="save-contact" onclick="addContact()">
+            <a href="#" class="save-contact" onclick="generateAndOpenVCF()">
                 הוספת אפרת לאנשי הקשר <i class="fa-solid fa-user-plus"></i>
-              </a>
+              </a>              
 
             <div class="about-section">
                 <div class="about-title">נעים מאוד</div>
@@ -116,27 +116,39 @@
         </div>
     </div>
     <script>
-        function addContact() {
-          const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-          const vcfFile = 'contact.vcf';
-        
-          // זיהוי מערכת הפעלה
-          if (/android/i.test(userAgent)) {
-            // באנדרואיד - הורדה רגילה
-            const link = document.createElement('a');
-            link.href = vcfFile;
-            link.download = 'Efrat.vcf';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-          } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-            // באייפון - פתיחה ישירה
-            window.location.href = vcfFile;
-          } else {
-            // במחשב או לא מזוהה
-            window.open(vcfFile, '_blank');
-          }
-        }
-        </script>        
+     function generateAndOpenVCF() {
+  // פרטי איש הקשר בפורמט מלא ותקין
+  const contactData = 
+`BEGIN:VCARD
+VERSION:3.0
+N:בן מנחם;אפרת;;;
+FN:אפרת בן מנחם
+TEL;TYPE=CELL,VOICE:+972544515873
+END:VCARD`;
+
+  const blob = new Blob([contactData], { type: 'text/vcard;charset=utf-8' });
+  const url = window.URL.createObjectURL(blob);
+
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  const isAndroid = /android/i.test(navigator.userAgent);
+
+  if (isIOS) {
+    // iOS מצפה לפתיחה ישירה עם MIME תקין
+    const newWindow = window.open();
+    newWindow.location.href = url;
+  } else if (isAndroid) {
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'EfratBenMenachem.vcf';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  } else {
+    window.open(url, '_blank');
+  }
+
+  setTimeout(() => window.URL.revokeObjectURL(url), 2000);
+}
+        </script>     
 </body>
 </html>
